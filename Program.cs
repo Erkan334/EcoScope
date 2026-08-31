@@ -48,6 +48,7 @@ namespace EcoScope
             app.UseAuthentication();
             app.UseAuthorization();
 
+            //Identity Endpoints
             app.MapIdentityApi<User>();
 
             app.MapControllers();
