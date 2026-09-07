@@ -1,6 +1,8 @@
 
 using EcoScope.Data;
 using EcoScope.Models;
+using EcoScope.Repositories.UserRepositories;
+using EcoScope.Services.UserServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -33,6 +35,9 @@ namespace EcoScope
 
 
             builder.Services.AddAuthorization();
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             var app = builder.Build();
 

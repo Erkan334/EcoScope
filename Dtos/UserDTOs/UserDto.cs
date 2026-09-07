@@ -1,4 +1,4 @@
-﻿namespace EcoScope.Dtos
+﻿namespace EcoScope.Dtos.UserDTOs
 {
     public class UserDto
     {
