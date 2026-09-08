@@ -1,5 +1,6 @@
 
 using EcoScope.Data;
+using EcoScope.Extensions;
 using EcoScope.Models;
 using EcoScope.Repositories.UserRepositories;
 using EcoScope.Services.UserServices;
@@ -11,7 +12,7 @@ namespace EcoScope
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,8 @@ namespace EcoScope
             builder.Services.AddScoped<IUserService, UserService>();
 
             var app = builder.Build();
+
+            //await app.SeedAdminUser();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

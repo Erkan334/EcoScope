@@ -16,9 +16,19 @@ namespace EcoScope.Data
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityRole<int>>().HasData(
+
+                new IdentityRole<int>
+                {
+                    Id = 1,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    ConcurrencyStamp = "dc9b2704-13c0-4423-9959-aa5dc3f5a57a"
+                });
         }
 
     }
