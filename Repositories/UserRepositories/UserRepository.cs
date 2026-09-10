@@ -1,5 +1,6 @@
 ﻿using EcoScope.Data;
 using EcoScope.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EcoScope.Repositories.UserRepositories
 {
@@ -22,14 +23,16 @@ namespace EcoScope.Repositories.UserRepositories
             throw new NotImplementedException();
         }
 
-        public Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return context.Users.ToList();
         }
 
-        public Task<User?> GetByIdAsync(int userId)
+        public async Task<User?> GetByIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            return user;
         }
 
         public async Task SaveAsync()
