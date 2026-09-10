@@ -36,5 +36,24 @@ namespace EcoScope.Services.UserServices
 
             await userRepository.SaveAsync();
         }
+
+        public async Task<User?> GetUserById(int userId) 
+        {
+            var user = await userRepository.GetByIdAsync(userId);
+
+            if(user == null) 
+            {
+                throw new Exception();
+            }
+
+            return user;
+        }
+
+        public async Task<List<User>> GetAllUsers()
+        {
+            var users = await userRepository.GetAllAsync();
+
+            return users;
+        }
     }
 }

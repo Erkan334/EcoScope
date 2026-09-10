@@ -1,12 +1,10 @@
 ﻿using EcoScope.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace EcoScope.Models
+namespace EcoScope.Dtos.ExpenseDTOs
 {
-    public class Expense
+    public class ExpenseDto
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(200), MinLength(2)]
         public string Title { get; set; } = null!;
@@ -17,9 +15,7 @@ namespace EcoScope.Models
         public BillingFrequency BillingFrequency { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; } = null!;
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; } = null!;
     }
 }

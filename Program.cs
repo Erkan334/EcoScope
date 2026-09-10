@@ -2,7 +2,9 @@
 using EcoScope.Data;
 using EcoScope.Extensions;
 using EcoScope.Models;
+using EcoScope.Repositories.ExpenseRepositories;
 using EcoScope.Repositories.UserRepositories;
+using EcoScope.Services.ExpenseServices;
 using EcoScope.Services.UserServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +41,9 @@ namespace EcoScope
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
+
+            builder.Services.AddScoped<IExpenseService, ExpenseService>();
+            builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
             var app = builder.Build();
 
