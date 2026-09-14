@@ -1,21 +1,15 @@
 ﻿using EcoScope.Dtos.CategoryDTOs;
 using EcoScope.Models;
+using EcoScope.Result;
 
 namespace EcoScope.Services.CategoryServices
 {
     public interface ICategoryService
     {
-        Task<List<Category>> GetAllCategoriesAsync(int userIdInt);
+        Task<List<CategoryDto>> GetAllCategoriesAsync();
 
-        Task<Category?> GetCategoryByIdAsync(int categoryId);
+        Task<DataResult<CategoryDto>> GetCategoryByIdAsync(int categoryId);
 
-        Task CreateCategoryAsync(CategoryDto dto, int userIdInt);
-
-        Task UpdateCategoryAsync();
-
-
-        void RemoveCategory(int categoryId);
-
-        Task SaveAsync();
+        
     }
 }
