@@ -2,8 +2,10 @@
 using EcoScope.Data;
 using EcoScope.Extensions;
 using EcoScope.Models;
+using EcoScope.Repositories.CategoryRepositories;
 using EcoScope.Repositories.ExpenseRepositories;
 using EcoScope.Repositories.UserRepositories;
+using EcoScope.Services.CategoryServices;
 using EcoScope.Services.ExpenseServices;
 using EcoScope.Services.UserServices;
 using Microsoft.AspNetCore.Identity;
@@ -44,6 +46,9 @@ namespace EcoScope
 
             builder.Services.AddScoped<IExpenseService, ExpenseService>();
             builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             var app = builder.Build();
 

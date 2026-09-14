@@ -9,7 +9,7 @@ namespace EcoScope.Repositories.ExpenseRepositories
 
         Task<Expense?> GetByIdAsync(int expenseId);
 
-        Task<Expense> CreateExpense(Expense expense);
+        Task CreateExpense(Expense expense);
 
 
         void RemoveExpense(Expense expense);

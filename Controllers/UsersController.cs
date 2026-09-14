@@ -1,5 +1,6 @@
 ﻿using EcoScope.Dtos.UserDTOs;
 using EcoScope.Models;
+using EcoScope.Result;
 using EcoScope.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,10 +21,11 @@ namespace EcoScope.Controllers
             userService = _userService;
         }
 
+        
 
         [HttpPut]
         [Route("me/name")]
-        public async Task<IActionResult> UpdateUserName(UpdateUserNameDto dto) 
+        public async Task<ActionResult<ResultResponse>> UpdateUserName(UpdateUserNameDto dto) 
         {
             var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -32,30 +34,36 @@ namespace EcoScope.Controllers
                 return Unauthorized();
             }
 
-            await userService.UpdateUserName(dto, userIdInt);
+            var result = await userService.UpdateUserName(dto, userIdInt);
 
-            return Ok();
+            if (!result.IsSuccess) 
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
 
         [Authorize(Roles ="Admin")]
         [HttpGet]
         [Route("users/{id:int}")]
-        public async Task<ActionResult<List<User>>> GetUserById(int id) 
+        public async Task<ActionResult<User>> GetUserById(int id) 
         {
-            var user = await userService.GetUserById(id);
+            var result = await userService.GetUserById(id);
 
-            if (user == null)
+            if (!result.IsSuccess)
             {
-                return NotFound("User could not be found");
+                return NotFound(result);
             }
 
-            return Ok(user);
+
+            return Ok(result);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<List<User>>> GetAllUsers() 
+        public async Task<ActionResult<List<UserDto>>> GetAllUsers() 
         {
             var users = await userService.GetAllUsers();
             return Ok(users);

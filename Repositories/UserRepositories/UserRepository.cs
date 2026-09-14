@@ -40,9 +40,6 @@ namespace EcoScope.Repositories.UserRepositories
             await context.SaveChangesAsync();
         }
 
-        public Task<User> UpdateAsync(User newUser)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

@@ -17,11 +17,10 @@ namespace EcoScope.Repositories.ExpenseRepositories
 
 
 
-        public async Task<Expense> CreateExpense(Expense expense)
+        public async Task CreateExpense(Expense expense)
         {
             await context.Expenses.AddAsync(expense);
 
-            return expense;
         }
 
         public void RemoveExpense(Expense expense)

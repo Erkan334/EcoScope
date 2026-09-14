@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EcoScope.Models
+namespace EcoScope.Dtos.CategoryDTOs
 {
-    public class Category
+    public class CategoryDto
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(100), MinLength(1)]
         public string Title { get; set; } = string.Empty;
-
-        public List<Expense> Expenses { get; set; }
     }
 }
