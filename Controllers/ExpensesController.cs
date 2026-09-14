@@ -1,6 +1,7 @@
 ﻿using EcoScope.Data;
 using EcoScope.Dtos.ExpenseDTOs;
 using EcoScope.Models;
+using EcoScope.Result;
 using EcoScope.Services.ExpenseServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,7 @@ namespace EcoScope.Controllers
 
         [HttpGet]
         [Route("/all")]
-        public async Task<ActionResult<List<Expense>>> GetAllExpensesAsync()
+        public async Task<ActionResult<List<ExpenseDto>>> GetAllExpensesAsync()
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -40,13 +41,28 @@ namespace EcoScope.Controllers
             var userIdInt = int.Parse(user);
 
             var expenses = await expenseService.GetAllAsync(userIdInt);
+
             return Ok(expenses);
 
         }
 
+        [HttpGet]
+        [Route("expense/{expenseid:int}")]
+        public async Task<ActionResult<ExpenseDto>> GetExpenseByIdAsync(int expenseId)
+        {
+            var result = await expenseService.GetByIdAsync(expenseId);
+
+            if (!result.IsSuccess)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+        }
+
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> CreateExpenseAsync(ExpenseDto dto)
+        public async Task<ActionResult<ResultResponse>> CreateExpenseAsync(ExpenseDto dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -57,15 +73,20 @@ namespace EcoScope.Controllers
 
             var userIdInt = int.Parse(userId);
 
-            await expenseService.CreateExpense(dto, userIdInt);
+            var result = await expenseService.CreateExpense(dto, userIdInt);
 
-            return Ok();
+            if (!result.IsSuccess)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
 
         }
 
         [HttpPut]
         [Route("{expenseId:int}/update")]
-        public async Task<IActionResult> UpdateExpenseAsync(UpdateExpenseDto dto, int expenseId)
+        public async Task<ActionResult<ResultResponse>> UpdateExpenseAsync(UpdateExpenseDto dto, int expenseId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -76,14 +97,20 @@ namespace EcoScope.Controllers
 
             var userIdInt = int.Parse(userId);
 
-            await expenseService.UpdateAsync(dto, expenseId, userIdInt);
-            return Ok();
+            var result = await expenseService.UpdateAsync(dto, expenseId, userIdInt);
+
+            if(!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
 
 
         [HttpDelete]
         [Route("{expenseId:int}/remove")]
-        public async Task<IActionResult> RemoveExpense(int expenseId) 
+        public async Task<ActionResult<ResultResponse>> RemoveExpense(int expenseId) 
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -92,11 +119,17 @@ namespace EcoScope.Controllers
                 return Unauthorized();
             }
 
+
             var userIdInt = int.Parse(userId);
 
-            await expenseService.RemoveExpense(expenseId, userIdInt);
+            var result = await expenseService.RemoveExpense(expenseId, userIdInt);
 
-            return Ok();
+            if(!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
     }
 }

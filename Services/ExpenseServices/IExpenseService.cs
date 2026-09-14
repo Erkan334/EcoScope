@@ -1,20 +1,21 @@
 ﻿using EcoScope.Dtos.ExpenseDTOs;
 using EcoScope.Models;
+using EcoScope.Result;
 
 namespace EcoScope.Services.ExpenseServices
 {
     public interface IExpenseService
     {
-        Task<List<Expense>> GetAllAsync(int userIdInt);
+        Task<List<ExpenseDto>> GetAllAsync(int userIdInt);
 
-        Task<Expense?> GetByIdAsync(int expenseId);
+        Task<DataResult<ExpenseDto>> GetByIdAsync(int expenseId);
 
-        Task CreateExpense(ExpenseDto dto, int userId);
+        Task<ResultResponse> CreateExpense(ExpenseDto dto, int userId);
 
 
-        Task UpdateAsync(UpdateExpenseDto dto, int expenseId, int userId);
+        Task<ResultResponse> UpdateAsync(UpdateExpenseDto dto, int expenseId, int userId);
 
-        Task RemoveExpense(int expenseId, int userIdInt);
+        Task<ResultResponse> RemoveExpense(int expenseId, int userIdInt);
 
     }
 }

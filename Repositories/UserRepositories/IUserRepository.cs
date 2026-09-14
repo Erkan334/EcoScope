@@ -10,8 +10,6 @@ namespace EcoScope.Repositories.UserRepositories
 
         Task<bool> ExistByEmailAsync(string email);
 
-        Task<User> UpdateAsync(User newUser);
-
         void Delete(int userId);
 
         Task SaveAsync();
