@@ -17,16 +17,17 @@ namespace EcoScope.Repositories.CategoryRepositories
 
         public async Task<List<Category>> GetAllCategoriesAsync()
         {
-            return await context.Categories.ToListAsync();
+            return await context.Categories.AsNoTracking()
+                                           .ToListAsync();
         }
 
 
         public async Task<Category?> GetCategoryByIdAsync(int categoryId)
         {
-            return await context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
+            return await context.Categories.AsNoTracking()
+                                           .FirstOrDefaultAsync(c => c.Id == categoryId);
 
         }
 
-        //
     }
 }

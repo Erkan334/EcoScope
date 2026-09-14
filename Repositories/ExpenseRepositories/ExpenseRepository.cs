@@ -30,11 +30,14 @@ namespace EcoScope.Repositories.ExpenseRepositories
 
         public async Task<List<Expense>> GetAllAsync(int userIdInt)
         {
-            return await context.Expenses.Where(e => e.UserId == userIdInt).ToListAsync();
+            return await context.Expenses.AsNoTracking()
+                                         .Where(e => e.UserId == userIdInt)
+                                         .ToListAsync();
 
            
         }
 
+        //Doesnt use AsNoTracking because UpdateExpense-method use this method.
         public async Task<Expense?> GetByIdAsync(int expenseId, int userIdInt)
         {
             return await context.Expenses.FirstOrDefaultAsync(e => e.Id == expenseId && e.UserId == userIdInt);

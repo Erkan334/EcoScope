@@ -25,12 +25,12 @@ namespace EcoScope.Repositories.UserRepositories
 
         public async Task<List<User>> GetAllAsync()
         {
-            return context.Users.ToList();
+            return context.Users.AsNoTracking().ToList();
         }
 
         public async Task<User?> GetByIdAsync(int userId)
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
         }
