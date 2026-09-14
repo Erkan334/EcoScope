@@ -1,7 +1,9 @@
 ﻿using EcoScope.Dtos.CategoryDTOs;
+using EcoScope.Dtos.ExpenseDTOs;
 using EcoScope.Exceptions.CategoryExceptions;
 using EcoScope.Models;
 using EcoScope.Repositories.CategoryRepositories;
+using EcoScope.Result;
 
 namespace EcoScope.Services.CategoryServices
 {
@@ -15,43 +17,44 @@ namespace EcoScope.Services.CategoryServices
             categoryRepository = _categoryRepository;
         }
 
-        public async Task<List<Category>> GetAllCategoriesAsync(int userIdInt)
+        public async Task<List<CategoryDto>> GetAllCategoriesAsync()
         {
-            var userList = await categoryRepository.GetAllCategoriesAsync();
+            var categories = await categoryRepository.GetAllCategoriesAsync();
+            
+            return categories.Select(category => new CategoryDto
+            {
+                Title = category.Title,
 
-            return userList;
+            }).ToList();
         }
-        public async Task<Category?> GetCategoryByIdAsync(int categoryId)
+        public async Task<DataResult<CategoryDto>> GetCategoryByIdAsync(int categoryId)
         {
             var category = await categoryRepository.GetCategoryByIdAsync(categoryId);
 
             if(category == null)
             {
-                throw new CategoryNotFoundException("Category could not be found");
+                return new DataResult<CategoryDto>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = "Category could not be found"
+                };
             }
 
-            return category;
-        }
-        public Task CreateCategoryAsync(CategoryDto dto, int userIdInt)
-        {
-            throw new NotImplementedException();
-        }
+            var categoryDto = new CategoryDto
+            {
+                Title = category.Title
+            };
 
-        public Task UpdateCategoryAsync()
-        {
-            throw new NotImplementedException();
-        }
+            return new DataResult<CategoryDto>
+            {
+                IsSuccess = true,
+                Data = categoryDto,
+                Message = null
+            };
 
-
-        public void RemoveCategory(int categoryId)
-        {
-            throw new NotImplementedException();
         }
-
-        public Task SaveAsync()
-        {
-            throw new NotImplementedException();
-        }
+        
 
     }
 }

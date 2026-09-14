@@ -27,23 +27,6 @@ namespace EcoScope.Repositories.CategoryRepositories
 
         }
 
-
-        public async Task CreateCategoryAsync(Category category)
-        {
-            await context.Categories.AddAsync(category);
-        }
-
-
-
-        public void RemoveCategory(Category category)
-        {
-            context.Categories.Remove(category);
-        }
-
-
-        public async Task SaveAsync()
-        {
-            await context.SaveChangesAsync();
-        }
+        //
     }
 }
