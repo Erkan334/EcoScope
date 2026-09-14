@@ -27,5 +27,6 @@ namespace EcoScope.Repositories.CategoryRepositories
 
         }
 
+        //
     }
 }
