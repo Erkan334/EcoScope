@@ -26,9 +26,9 @@ namespace EcoScope.Controllers
         }
 
 
-
+        //Gets all expenses connected to the user
         [HttpGet]
-        [Route("/all")]
+        [Route("all")]
         public async Task<ActionResult<List<ExpenseDto>>> GetAllExpensesAsync()
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -46,11 +46,22 @@ namespace EcoScope.Controllers
 
         }
 
+        //Gets specific expense from the user
         [HttpGet]
-        [Route("expense/{expenseid:int}")]
+        [Route("{expenseid:int}")]
         public async Task<ActionResult<ExpenseDto>> GetExpenseByIdAsync(int expenseId)
         {
-            var result = await expenseService.GetByIdAsync(expenseId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var userIdInt = int.Parse(userId);
+
+
+            var result = await expenseService.GetByIdAsync(expenseId, userIdInt);
 
             if (!result.IsSuccess)
             {
