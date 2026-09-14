@@ -1,6 +1,4 @@
 ﻿using EcoScope.Dtos.ExpenseDTOs;
-using EcoScope.Dtos.UserDTOs;
-using EcoScope.Exceptions.ExpenseExceptions;
 using EcoScope.Models;
 using EcoScope.Repositories.ExpenseRepositories;
 using EcoScope.Result;
@@ -30,15 +28,18 @@ namespace EcoScope.Services.ExpenseServices
                 Title = expense.Title,
                 CostAmount = expense.CostAmount,
                 BillingFrequency = expense.BillingFrequency,
+                CategoryId = expense.CategoryId
                 
             }).ToList();
 
         }
 
 
-        public async Task<DataResult<ExpenseDto>> GetByIdAsync(int expenseId)
+        public async Task<DataResult<ExpenseDto>> GetByIdAsync(int expenseId, int userIdInt)
         {
-            var expense = await expenseRepository.GetByIdAsync(expenseId);
+            var expense = await expenseRepository.GetByIdAsync(expenseId, userIdInt);
+
+            
 
             if(expense == null)
             {
@@ -56,7 +57,6 @@ namespace EcoScope.Services.ExpenseServices
                 CostAmount = expense.CostAmount,
                 BillingFrequency = expense.BillingFrequency,
                 CategoryId = expense.CategoryId,
-                UserId = expense.UserId
             };
 
             return new DataResult<ExpenseDto>
@@ -71,40 +71,39 @@ namespace EcoScope.Services.ExpenseServices
         public async Task<ResultResponse> CreateExpense(ExpenseDto dto, int userId)
         {
 
-            throw new NotImplementedException();
-            //var categoryResult = await categoryService.GetCategoryByIdAsync(dto.CategoryId);
+            var categoryResult = await categoryService.GetCategoryByIdAsync(dto.CategoryId);
 
-            //if(!categoryResult.IsSuccess)
-            //{
-            //    return new ResultResponse
-            //    {
-            //        IsSuccess = false,
-            //        Message = "Category does not exist"
-            //    };
-            //}
+            if (!categoryResult.IsSuccess)
+            {
+                return new ResultResponse
+                {
+                    IsSuccess = false,
+                    Message = "Category does not exist"
+                };
+            }
 
-            //var expense = new Expense
-            //{
-            //    Title = dto.Title,
-            //    CostAmount = dto.CostAmount,
-            //    BillingFrequency = dto.BillingFrequency,
-            //    CategoryId = dto.CategoryId,
-            //    UserId = userId
-            //};
+            var expense = new Expense
+            {
+                Title = dto.Title,
+                CostAmount = dto.CostAmount,
+                BillingFrequency = dto.BillingFrequency,
+                CategoryId = dto.CategoryId,
+                UserId = userId
+            };
 
-            //await expenseRepository.CreateExpense(expense);
-            //await expenseRepository.SaveAsync();
+            await expenseRepository.CreateExpense(expense);
+            await expenseRepository.SaveAsync();
 
-            //return new ResultResponse
-            //{
-            //    IsSuccess = true,
-            //    Message = "Expense created successfully"
-            //};
+            return new ResultResponse
+            {
+                IsSuccess = true,
+                Message = "Expense created successfully"
+            };
         }
 
         public async Task<ResultResponse> UpdateAsync(UpdateExpenseDto dto, int expenseId, int userIdInt)
         {
-            var expense = await expenseRepository.GetByIdAsync(expenseId);
+            var expense = await expenseRepository.GetByIdAsync(expenseId, userIdInt);
 
 
             if (expense == null)
@@ -117,16 +116,17 @@ namespace EcoScope.Services.ExpenseServices
                 //throw new ExpenseNotFoundException("Expense could not be found");
             }
 
+            var categoryResult = await categoryService.GetCategoryByIdAsync(dto.CategoryId);
 
-            if (expense.UserId != userIdInt)
+            if (!categoryResult.IsSuccess)
             {
                 return new ResultResponse
                 {
                     IsSuccess = false,
-                    Message = "Unauthorized"
+                    Message = "Category does not exist"
                 };
-                //throw new ExpenseUnauthorizedException();
             }
+
 
             expense.Title = dto.Title;
             expense.CostAmount = dto.CostAmount;
@@ -144,7 +144,7 @@ namespace EcoScope.Services.ExpenseServices
 
         public async Task<ResultResponse> RemoveExpense(int expenseId, int userIdInt)
         {
-            var expense = await expenseRepository.GetByIdAsync(expenseId);
+            var expense = await expenseRepository.GetByIdAsync(expenseId, userIdInt);
 
             if(expense == null)
             {
@@ -155,15 +155,6 @@ namespace EcoScope.Services.ExpenseServices
                 };
             }
 
-            if(expense.UserId != userIdInt) 
-            {
-                return new ResultResponse
-                {
-                    IsSuccess = false,
-                    Message = "Unauthorized"
-                };
-                //throw new ExpenseUnauthorizedException();
-            }
 
             expenseRepository.RemoveExpense(expense);
             await expenseRepository.SaveAsync();

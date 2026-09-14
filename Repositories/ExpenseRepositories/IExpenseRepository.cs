@@ -7,7 +7,7 @@ namespace EcoScope.Repositories.ExpenseRepositories
     {
         Task<List<Expense>> GetAllAsync(int userIdInt);
 
-        Task<Expense?> GetByIdAsync(int expenseId);
+        Task<Expense?> GetByIdAsync(int expenseId, int userIdInt);
 
         Task CreateExpense(Expense expense);
 

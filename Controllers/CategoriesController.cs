@@ -2,6 +2,7 @@
 using EcoScope.Models;
 using EcoScope.Result;
 using EcoScope.Services.CategoryServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace EcoScope.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService categoryService;

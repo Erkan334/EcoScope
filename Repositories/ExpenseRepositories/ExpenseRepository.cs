@@ -35,11 +35,10 @@ namespace EcoScope.Repositories.ExpenseRepositories
            
         }
 
-        public async Task<Expense?> GetByIdAsync(int expenseId)
+        public async Task<Expense?> GetByIdAsync(int expenseId, int userIdInt)
         {
-            var expense = await context.Expenses.FirstOrDefaultAsync(e => e.Id == expenseId);
+            return await context.Expenses.FirstOrDefaultAsync(e => e.Id == expenseId && e.UserId == userIdInt);
 
-            return expense;
         }
 
 

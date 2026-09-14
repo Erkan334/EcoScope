@@ -8,7 +8,7 @@ namespace EcoScope.Services.ExpenseServices
     {
         Task<List<ExpenseDto>> GetAllAsync(int userIdInt);
 
-        Task<DataResult<ExpenseDto>> GetByIdAsync(int expenseId);
+        Task<DataResult<ExpenseDto>> GetByIdAsync(int expenseId, int userIdInt);
 
         Task<ResultResponse> CreateExpense(ExpenseDto dto, int userId);
 

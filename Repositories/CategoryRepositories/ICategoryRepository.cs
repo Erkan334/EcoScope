@@ -9,12 +9,5 @@ namespace EcoScope.Repositories.CategoryRepositories
 
         Task<Category?> GetCategoryByIdAsync(int categoryId);
 
-        //Task CreateCategoryAsync(Category category);
-
-
-        //void RemoveCategory(Category category);
-
-        //Task SaveAsync();
-
     }
 }
