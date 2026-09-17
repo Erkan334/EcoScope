@@ -15,5 +15,7 @@ namespace EcoScope.Dtos.ExpenseDTOs
         public BillingFrequency BillingFrequency { get; set; }
 
         public int CategoryId { get; set; }
+
+        public string CategoryTitle { get; set; } = null!;
     }
 }

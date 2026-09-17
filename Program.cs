@@ -32,6 +32,15 @@ namespace EcoScope
             }).AddRoles<IdentityRole<int>>()
               .AddEntityFrameworkStores<EcoScopeDbContext>();
 
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Services.ConfigureApplicationCookie(option =>
+                {
+                    option.Cookie.SameSite = SameSiteMode.None;
+                    option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                });
+            }
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -50,6 +59,17 @@ namespace EcoScope
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("FrontendDev", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
+
             var app = builder.Build();
 
             //await app.SeedAdminUser();
@@ -63,11 +83,16 @@ namespace EcoScope
 
             app.UseHttpsRedirection();
 
+            app.UseCors("FrontendDev");
+
             app.UseAuthentication();
             app.UseAuthorization();
 
+            //adds api as endpoint prefix
+            var api = app.MapGroup("/api");
+
             //Identity Endpoints
-            app.MapIdentityApi<User>();
+            api.MapIdentityApi<User>();
 
             app.MapControllers();
 

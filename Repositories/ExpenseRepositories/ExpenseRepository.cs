@@ -31,7 +31,7 @@ namespace EcoScope.Repositories.ExpenseRepositories
         public async Task<List<Expense>> GetAllAsync(int userIdInt)
         {
             return await context.Expenses.AsNoTracking()
-                                         .Where(e => e.UserId == userIdInt)
+                                         .Where(e => e.UserId == userIdInt).Include(e => e.Category)
                                          .ToListAsync();
 
            

@@ -28,7 +28,8 @@ namespace EcoScope.Services.ExpenseServices
                 Title = expense.Title,
                 CostAmount = expense.CostAmount,
                 BillingFrequency = expense.BillingFrequency,
-                CategoryId = expense.CategoryId
+                CategoryId = expense.CategoryId,
+                CategoryTitle = expense.Category.Title
                 
             }).ToList();
 
