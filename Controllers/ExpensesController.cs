@@ -73,7 +73,7 @@ namespace EcoScope.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<ResultResponse>> CreateExpenseAsync(ExpenseDto dto)
+        public async Task<ActionResult<ResultResponse>> CreateExpenseAsync(CreateExpenseDto dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 

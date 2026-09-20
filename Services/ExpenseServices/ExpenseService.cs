@@ -69,7 +69,7 @@ namespace EcoScope.Services.ExpenseServices
         }
 
 
-        public async Task<ResultResponse> CreateExpense(ExpenseDto dto, int userId)
+        public async Task<ResultResponse> CreateExpense(CreateExpenseDto dto, int userId)
         {
 
             var categoryResult = await categoryService.GetCategoryByIdAsync(dto.CategoryId);

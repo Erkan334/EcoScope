@@ -10,7 +10,7 @@ namespace EcoScope.Services.ExpenseServices
 
         Task<DataResult<ExpenseDto>> GetByIdAsync(int expenseId, int userIdInt);
 
-        Task<ResultResponse> CreateExpense(ExpenseDto dto, int userId);
+        Task<ResultResponse> CreateExpense(CreateExpenseDto dto, int userId);
 
 
         Task<ResultResponse> UpdateAsync(UpdateExpenseDto dto, int expenseId, int userId);
