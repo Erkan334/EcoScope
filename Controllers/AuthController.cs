@@ -22,5 +22,17 @@ namespace EcoScope.Controllers
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route("me/role")]
+        public ActionResult GetUserRole()
+        {
+            var isAdmin = User.IsInRole("Admin");
+
+            return Ok(new
+            {
+                isAdmin = isAdmin
+            });
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace EcoScope.Services.ExpenseServices
 
             return expenses.Select(expense => new ExpenseDto
             {
+                Id = expense.Id,
                 Title = expense.Title,
                 CostAmount = expense.CostAmount,
                 BillingFrequency = expense.BillingFrequency,
@@ -54,6 +55,7 @@ namespace EcoScope.Services.ExpenseServices
 
             var expenseDto = new ExpenseDto
             {
+                Id = expense.Id,
                 Title = expense.Title,
                 CostAmount = expense.CostAmount,
                 BillingFrequency = expense.BillingFrequency,

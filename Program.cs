@@ -1,6 +1,7 @@
 
 using EcoScope.Data;
 using EcoScope.Extensions;
+using EcoScope.Middlewares;
 using EcoScope.Models;
 using EcoScope.Repositories.CategoryRepositories;
 using EcoScope.Repositories.ExpenseRepositories;
@@ -71,6 +72,8 @@ namespace EcoScope
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
             //await app.SeedAdminUser();
 

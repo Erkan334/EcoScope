@@ -5,6 +5,8 @@ namespace EcoScope.Dtos.ExpenseDTOs
 {
     public class ExpenseDto
     {
+        public int Id { get; set; }
+
         [Required]
         [MaxLength(200), MinLength(2)]
         public string Title { get; set; } = null!;
