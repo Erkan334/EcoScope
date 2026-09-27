@@ -64,7 +64,7 @@ namespace EcoScope
             {
                 options.AddPolicy("FrontendDev", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173")
+                    policy.WithOrigins("Frontend_Domain")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
