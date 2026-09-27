@@ -33,14 +33,13 @@ namespace EcoScope
             }).AddRoles<IdentityRole<int>>()
               .AddEntityFrameworkStores<EcoScopeDbContext>();
 
-            if (builder.Environment.IsDevelopment())
+            
+            builder.Services.ConfigureApplicationCookie(option =>
             {
-                builder.Services.ConfigureApplicationCookie(option =>
-                {
-                    option.Cookie.SameSite = SameSiteMode.None;
-                    option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                });
-            }
+                option.Cookie.SameSite = SameSiteMode.None;
+                option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            });
+            
 
             // Add services to the container.
 
@@ -87,6 +86,8 @@ namespace EcoScope
             app.UseHttpsRedirection();
 
             app.UseCors("FrontendDev");
+
+            await app.SeedAdminUser();
 
             app.UseAuthentication();
             app.UseAuthorization();
