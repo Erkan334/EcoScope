@@ -34,11 +34,11 @@ namespace EcoScope
               .AddEntityFrameworkStores<EcoScopeDbContext>();
 
             
-            builder.Services.ConfigureApplicationCookie(option =>
-            {
-                option.Cookie.SameSite = SameSiteMode.None;
-                option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            });
+                builder.Services.ConfigureApplicationCookie(option =>
+                {
+                    option.Cookie.SameSite = SameSiteMode.None;
+                    option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                });
             
 
             // Add services to the container.
@@ -77,11 +77,10 @@ namespace EcoScope
             //await app.SeedAdminUser();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+            
                 app.MapOpenApi();
                 app.MapScalarApiReference();
-            }
+            
 
             app.UseHttpsRedirection();
 
