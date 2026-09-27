@@ -64,7 +64,7 @@ namespace EcoScope
             {
                 options.AddPolicy("FrontendDev", policy =>
                 {
-                    policy.WithOrigins("Frontend_Domain")
+                    policy.WithOrigins(builder.Configuration["Frontend_Domain"])
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
