@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace EcoScope.Models
 {
+    [Index(nameof(Email), IsUnique = true)]
     public class User : IdentityUser<int>
     {
         [MinLength(2), MaxLength(50)]

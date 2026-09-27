@@ -25,10 +25,12 @@ namespace EcoScope.Services.ExpenseServices
 
             return expenses.Select(expense => new ExpenseDto
             {
+                Id = expense.Id,
                 Title = expense.Title,
                 CostAmount = expense.CostAmount,
                 BillingFrequency = expense.BillingFrequency,
-                CategoryId = expense.CategoryId
+                CategoryId = expense.CategoryId,
+                CategoryTitle = expense.Category.Title
                 
             }).ToList();
 
@@ -53,6 +55,7 @@ namespace EcoScope.Services.ExpenseServices
 
             var expenseDto = new ExpenseDto
             {
+                Id = expense.Id,
                 Title = expense.Title,
                 CostAmount = expense.CostAmount,
                 BillingFrequency = expense.BillingFrequency,
@@ -68,7 +71,7 @@ namespace EcoScope.Services.ExpenseServices
         }
 
 
-        public async Task<ResultResponse> CreateExpense(ExpenseDto dto, int userId)
+        public async Task<ResultResponse> CreateExpense(CreateExpenseDto dto, int userId)
         {
 
             var categoryResult = await categoryService.GetCategoryByIdAsync(dto.CategoryId);
